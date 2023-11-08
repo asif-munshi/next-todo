@@ -8,13 +8,12 @@ import { Todo } from '@prisma/client'
 
 export default function CardTodo() {
   const [todos, setTodos] = useState<Todo[] | null>(null)
-  // useEffect(() => {
-  //   axios.get('/api/todo').then((response) => setTodos(response.data as Todo))
-  // }, [])
+
   useEffect(() => {
-    fetch('/api/todo')
-      .then((response) => response.json())
-      .then((json) => setTodos(json as Todo[]))
+    axios
+      .get('/api/todo')
+      .then((response) => setTodos(response.data))
+      .catch((error) => console.error(error))
   }, [])
 
   if (!todos) return <div>No todos</div>
