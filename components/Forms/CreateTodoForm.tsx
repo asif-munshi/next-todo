@@ -11,9 +11,41 @@ import {
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import axios from 'axios'
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { z } from 'zod'
+import { createTodoSchema } from '@/lib/validationSchemas'
 import useTextarea from '@/hooks/useTextarea'
 
+type TodoForm = z.infer<typeof createTodoSchema>
+
 export default function CreateTodoForm() {
+  // const router = useRouter()
+  // const {
+  //   control,
+  //   handleSubmit,
+  //   register,
+  //   formState: { errors },
+  // } = useForm<TodoForm>({
+  //   resolver: zodResolver(createTodoSchema),
+  // })
+  // const [error, setError] = useState('')
+  // const [isSubmitting, setSubmitting] = useState(false)
+
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     setSubmitting(true)
+  //     await axios.post('/api/todo', data)
+  //     router.push('/')
+  //   } catch (error) {
+  //     setSubmitting(false)
+  //     setError('An unexpected error occured.')
+  //   }
+  // })
+
   return (
     <Tabs defaultValue="post" className="w-full">
       <TabsList className="grid h-[51px] w-full grid-cols-2 p-0">
@@ -41,38 +73,64 @@ export default function CreateTodoForm() {
 }
 
 const PostForm = () => {
-  const { titleRef, descriptionRef } = useTextarea()
+  const router = useRouter()
+  const {
+    control,
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<TodoForm>({
+    resolver: zodResolver(createTodoSchema),
+  })
+  const [error, setError] = useState('')
+  const [isSubmitting, setSubmitting] = useState(false)
+
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      setSubmitting(true)
+      await axios.post('/api/todo', data)
+      router.push('/')
+    } catch (error) {
+      setSubmitting(false)
+      setError('An unexpected error occured.')
+    }
+  })
 
   return (
-    <Card className="rounded border-none">
-      <CardContent className="space-y-2 pt-4">
-        <div>
-          <Textarea
-            maxLength={300}
-            rows={1}
-            placeholder="Title"
-            ref={titleRef}
-            className="box-border block min-h-[39px] w-full resize-none overflow-hidden overflow-x-hidden break-words rounded pr-[68px] text-[#1c1c1c] focus-visible:border focus-visible:border-[#1A1A1B] focus-visible:ring-0 focus-visible:ring-offset-0"
-          />
-        </div>
-        <div className="space-y-1">
-          <Textarea
-            maxLength={3000}
-            placeholder="Description (optional)"
-            ref={descriptionRef}
-            className="box-border block min-h-[122px] w-full overflow-hidden break-words rounded text-[#1c1c1c] focus-visible:border focus-visible:border-[#1A1A1B] focus-visible:ring-0 focus-visible:ring-offset-0"
-          />
-        </div>
-      </CardContent>
-      <CardFooter className="justify-end">
-        <Button
-          variant={'primary'}
-          className="h-8 rounded-full text-sm font-bold"
-        >
-          Todo
-        </Button>
-      </CardFooter>
-    </Card>
+    <>
+      <form onSubmit={onSubmit}>
+        <Card className="rounded border-none">
+          <CardContent className="space-y-2 pt-4">
+            <div>
+              <Textarea
+                maxLength={300}
+                rows={1}
+                placeholder="Title"
+                className="box-border block min-h-[39px] w-full resize-none overflow-hidden overflow-x-hidden break-words rounded pr-[68px] text-[#1c1c1c] focus-visible:border focus-visible:border-[#1A1A1B] focus-visible:ring-0 focus-visible:ring-offset-0"
+                {...register('title')}
+              />
+            </div>
+            <div className="space-y-1">
+              <Textarea
+                maxLength={3000}
+                placeholder="Description (optional)"
+                className="box-border block min-h-[122px] w-full overflow-hidden break-words rounded text-[#1c1c1c] focus-visible:border focus-visible:border-[#1A1A1B] focus-visible:ring-0 focus-visible:ring-offset-0"
+                {...register('description')}
+              />
+            </div>
+          </CardContent>
+          <CardFooter className="justify-end">
+            <Button
+              variant={'primary'}
+              className="h-8 rounded-full text-sm font-bold"
+              disabled={isSubmitting}
+            >
+              Todo
+            </Button>
+          </CardFooter>
+        </Card>
+      </form>
+    </>
   )
 }
 
