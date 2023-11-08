@@ -10,9 +10,6 @@ export default function Home() {
             <SubHeader />
             <div className="grid w-full grid-cols-1 place-items-center gap-[10px] xl:grid-cols-2 xl:gap-4">
               <CardTodo />
-              <CardTodo />
-              <CardTodo />
-              <CardTodo />
             </div>
           </div>
         </div>
