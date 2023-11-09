@@ -1,26 +1,28 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import axios from 'axios'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Todo } from '@prisma/client'
 
-export default function CardTodo() {
-  const [todos, setTodos] = useState<Todo[] | null>(null)
+async function allTodos() {
+  const response = await axios.get('/api/todo')
+  const users = response.data as Todo[]
+  return users
+}
 
-  useEffect(() => {
-    axios
-      .get('/api/todo')
-      .then((response) => setTodos(response.data))
-      .catch((error) => console.error(error))
-  }, [])
+export default function ListTodos() {
+  const { data } = useQuery({
+    queryKey: ['todos'],
+    queryFn: allTodos,
+  })
 
-  if (!todos) return <div>No todos</div>
+  if (!data) return <div>No todos</div>
 
   return (
     <>
-      {todos.map((todo) => {
+      {data.map((todo) => {
         const createdAt = new Date(todo.createdAt).toLocaleDateString()
         return (
           <div
