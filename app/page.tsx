@@ -1,7 +1,10 @@
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query'
 import { Todo } from '@prisma/client'
 import axios from 'axios'
-import getQueryClient from './providers/getQueryClient'
 import SubHeader from '@/components/SubHeader/SubHeader'
 import ListTodos from './list-todos'
 
@@ -12,7 +15,7 @@ async function allTodos() {
 }
 
 export default async function Home() {
-  const queryClient = getQueryClient()
+  const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
     queryKey: ['todos'],
     queryFn: allTodos,
