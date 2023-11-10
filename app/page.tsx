@@ -10,8 +10,8 @@ import ListTodos from './list-todos'
 
 async function allTodos() {
   const response = await axios.get('/api/todo')
-  const users = response.data as Todo[]
-  return users
+  const todos = response.data as Todo[]
+  return todos
 }
 
 export default async function Home() {

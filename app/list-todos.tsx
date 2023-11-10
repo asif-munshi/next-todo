@@ -64,7 +64,7 @@ export default function ListTodos() {
                   <div className="text-[#787C7E]">{createdAt.toString()}</div>
                 </div>
               </div>
-              <Link href={'/create'} className="flex flex-col pt-2">
+              <Link href={`/todo/${todo.id}`} className="flex flex-col pt-2">
                 <div className="pr-[5px] text-lg font-medium leading-[22px] text-[#222]">
                   {todo.title}
                 </div>
