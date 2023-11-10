@@ -1,9 +1,10 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import Link from 'next/link'
 import axios from 'axios'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import { Todo } from '@prisma/client'
 
 async function allTodos() {
@@ -12,13 +13,27 @@ async function allTodos() {
   return todos
 }
 
+async function deleteTodo(id: string) {
+  return await axios.delete(`/api/todo/${id}`)
+}
+
 export default function ListTodos() {
   const { data } = useQuery({
     queryKey: ['todos'],
     queryFn: allTodos,
   })
 
-  if (!data) return <div>No todos</div>
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: deleteTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['todos'] })
+    },
+  })
+
+  if (!data) return <div>Loading..</div>
+  if (data.length == 0) return <div>No Todos</div>
 
   return (
     <>
@@ -55,7 +70,14 @@ export default function ListTodos() {
                 </div>
                 <div className="pb-[10px] pt-[5px]">{todo.description}</div>
               </Link>
-              <div>Bottom</div>
+              <div>
+                <Button
+                  variant={'destructive'}
+                  onClick={async () => await mutation.mutateAsync(todo.id)}
+                >
+                  Delete
+                </Button>
+              </div>
             </div>
           </div>
         )
