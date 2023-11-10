@@ -1,4 +1,5 @@
 import CreateTodoForm from '@/components/Forms/CreateTodoForm'
+import CreateTodo from './create-todo'
 
 export default function CreateTodoPage() {
   return (
@@ -14,7 +15,8 @@ export default function CreateTodoPage() {
                   </span>
                 </div>
                 <div className="mb-[15px] flex flex-col gap-4 rounded-[5px] bg-white">
-                  <CreateTodoForm />
+                  <CreateTodo />
+                  {/* <CreateTodoForm /> */}
                 </div>
               </div>
             </div>
