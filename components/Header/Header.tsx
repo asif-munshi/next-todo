@@ -1,9 +1,9 @@
-import { Input } from "@/components/ui/input";
-import { Bell, Plus } from "lucide-react";
-import Link from "next/link";
-import MobileSidebar from "./MobileSidebar";
-import Navigation from "./Navigation";
-import UserDropdownMenu from "./UserDropdownMenu";
+import { Input } from '@/components/ui/input'
+import { Bell, Plus } from 'lucide-react'
+import Link from 'next/link'
+import MobileSidebar from './MobileSidebar'
+import Navigation from './Navigation'
+import UserDropdownMenu from './UserDropdownMenu'
 
 export default function Header() {
   return (
@@ -15,7 +15,7 @@ export default function Header() {
         </div>
         <div className="hidden h-full w-full items-center md:flex">
           <Link
-            href={"/"}
+            href={'/'}
             className="mr-4 flex h-full flex-grow-0 items-center justify-center text-lg font-bold"
           >
             What Todo
@@ -37,7 +37,7 @@ export default function Header() {
               <Bell className="h-5 w-5" strokeWidth={1.3} />
             </button>
             <Link
-              href={"/create"}
+              href={'/create'}
               className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-[#1a1a1b1a]"
             >
               <Plus className="h-6 w-6" strokeWidth={1.3} />
@@ -47,5 +47,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  );
+  )
 }

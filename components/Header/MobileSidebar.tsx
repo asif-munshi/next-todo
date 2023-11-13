@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   Sheet,
@@ -9,10 +9,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
-import Link from "next/link";
+} from '@/components/ui/sheet'
+import { Button } from '@/components/ui/button'
+import { Menu } from 'lucide-react'
+import Link from 'next/link'
 
 export default function MobileSidebar() {
   return (
@@ -25,7 +25,7 @@ export default function MobileSidebar() {
           </Button>
         </SheetTrigger>
         <SheetContent
-          side={"left"}
+          side={'left'}
           className="flex h-screen flex-col justify-between pt-12"
         >
           <SheetHeader>
@@ -36,9 +36,9 @@ export default function MobileSidebar() {
           </SheetHeader>
         </SheetContent>
       </Sheet>
-      <Link href={"/"} className="text-lg font-bold">
+      <Link href={'/'} className="text-lg font-bold">
         WT
       </Link>
     </>
-  );
+  )
 }

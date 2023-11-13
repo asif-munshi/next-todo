@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   DropdownMenu,
@@ -13,19 +13,19 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { ChevronDown, Home, Plus } from "lucide-react";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+import { ChevronDown, Home, Plus } from 'lucide-react'
+import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 const navLinks = [
   {
     id: 1,
-    text: "Home",
-    href: "/",
-    path: "/",
+    text: 'Home',
+    href: '/',
+    path: '/',
     icon: (
       <Home
         className="mr-2 h-5 w-5 fill-none"
@@ -38,9 +38,9 @@ const navLinks = [
   },
   {
     id: 2,
-    text: "Create Todo",
-    href: "/create",
-    path: "create",
+    text: 'Create Todo',
+    href: '/create',
+    path: 'create',
     icon: (
       <Plus
         className="mr-2 h-5 w-5 fill-none"
@@ -51,11 +51,11 @@ const navLinks = [
       />
     ),
   },
-];
+]
 
 export default function Navigation() {
-  const [open, setOpen] = useState(false);
-  const pathname = usePathname();
+  const [open, setOpen] = useState(false)
+  const pathname = usePathname()
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -71,7 +71,7 @@ export default function Navigation() {
                 <span className="text-base">Home</span>
               </>
             )}
-            {pathname.match("/create") && (
+            {pathname.match('/create') && (
               <>
                 <Plus className="h-5 w-5" />
                 <span className="text-base">Create Todo</span>
@@ -81,8 +81,8 @@ export default function Navigation() {
           <ChevronDown
             className={`h-5 w-5 ${
               open
-                ? "rotate-180 transition duration-150 ease-in-out"
-                : "rotate-0 transition duration-150 ease-in-out"
+                ? 'rotate-180 transition duration-150 ease-in-out'
+                : 'rotate-0 transition duration-150 ease-in-out'
             }`}
             strokeWidth={1.2}
           />
@@ -105,5 +105,5 @@ export default function Navigation() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }
